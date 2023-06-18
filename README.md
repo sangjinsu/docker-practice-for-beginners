@@ -46,4 +46,16 @@
 - -d : 백그라운드 실행 
 - docker logs : 백그라운드 실행 컨테이너 로그 확인
 
+## Docker image 
+
+### Dockerfile 
+
+1. start from a base os or another image
+2. install all dependencies
+3. copy source code
+4. specify entry point
+
+```
+docker build . -f Dockerfile -t [username]/[image name]
+```
 
