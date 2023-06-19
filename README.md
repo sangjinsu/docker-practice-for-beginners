@@ -59,3 +59,8 @@
 docker build . -f Dockerfile -t [username]/[image name]
 ```
 
+### Environment variables
+
+```
+docker run -e 옵션=옵션값 이미지
+```
