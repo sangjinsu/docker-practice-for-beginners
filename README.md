@@ -35,20 +35,20 @@
 - docker run -d [image] - 백그라운드 실행
 - docker attach [ID or NAMES]
 
-## Docker Run 
+## Docker Run
 
-- -tag : 버전 관리 
-- -i : interactive, 값 입력 
-- -t : terminal 
+- -tag : 버전 관리
+- -i : interactive, 값 입력
+- -t : terminal
 - -it : 터미널 대화 모드
-- -port 외부포트:컨테이녀 내부포트 : 포트 설정 
-- -v : 볼륨 설정, 컨테이너 종료되어도 데이터 유지 
-- -d : 백그라운드 실행 
+- -port 외부포트:컨테이녀 내부포트 : 포트 설정
+- -v : 볼륨 설정, 컨테이너 종료되어도 데이터 유지
+- -d : 백그라운드 실행
 - docker logs : 백그라운드 실행 컨테이너 로그 확인
 
-## Docker image 
+## Docker image
 
-### Dockerfile 
+### Dockerfile
 
 1. start from a base os or another image
 2. install all dependencies
@@ -64,3 +64,8 @@ docker build . -f Dockerfile -t [username]/[image name]
 ```
 docker run -e 옵션=옵션값 이미지
 ```
+
+### Entry Point
+
+엔트리 포인트는 파라미터에 앞서 고정적으로 사용된다
+
