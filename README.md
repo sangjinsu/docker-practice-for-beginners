@@ -69,3 +69,98 @@ docker run -e 옵션=옵션값 이미지
 
 엔트리 포인트는 파라미터에 앞서 고정적으로 사용된다
 
+## Docker Compose
+
+```bash
+docker run -d --name=redis redis
+docker run -d --name=db postgres
+docker run -d --name=vote -p 5000:80 --link redis:redis voting-app
+docker run -d --name=result -p 5001:80 --link db:db result-app
+docker run -d --name=worker --link db:db --link redis:redis worker
+```
+
+```yaml
+redis:
+  image: redis
+db:
+  image: postgres:9.4
+vote:
+  image: voting-app
+  ports:
+    - 5000:80
+  links:
+    - redis
+result:
+  image: result-app
+  ports:
+    - 5001:80
+  links:
+    - db
+worker:
+  image: worker
+  links:
+    - redis
+    - db 
+```
+
+```bash
+docker-compose up
+```
+
+```yaml
+redis:
+  build: ./redis
+db:
+  build: postgres:9.4
+vote:
+  build: ./voting-app
+  ports:
+    - 5000:80
+  links:
+    - redis
+result:
+  build: ./result-app
+  ports:
+    - 5001:80
+  links:
+    - db
+worker:
+  build: ./worker
+  links:
+    - redis
+    - db 
+```
+
+### docker compose - versions
+
+- version 키워드를 사용해서 파일의 버전을 표시한다. 
+
+### docker compose - networks
+
+```yaml
+versions: 2
+services:
+  redis:
+    image: redis
+    networks:
+      - back-end
+  db:
+    image: postgres:9.4
+    networks:
+      - back-end
+  vote:
+    image: voting-app
+    networks:
+      - front-end
+      - back-end
+  result:
+    image: result-app
+    networks:
+      - front-end
+      - back-end
+networks:
+  front-end:
+  back-end:
+```
+
+
