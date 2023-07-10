@@ -133,12 +133,69 @@ worker:
 
 ### docker compose - versions
 
-- version 키워드를 사용해서 파일의 버전을 표시한다. 
+- version 키워드를 사용해서 파일의 버전을 표시한다.
 
 ### docker compose - networks
 
 ```yaml
-versions: 2
+version: "2
+services:
+  redis:
+    image: redis
+    networks:
+      - back-end
+  db:
+    image: postgres:9.4
+    networks:
+      - back-end
+  vote:
+    image: voting-app
+    networks:
+      - front-end
+      - back-end
+  result:
+    image: result-app
+    networks:
+      - front-end
+      - back-end
+```
+
+### 사전 지식 - YAML
+
+![img.png](img.png)
+
+### docker compose - 파일 개선하기
+
+- 개선 전
+
+```yaml
+redis:
+  image: redis
+db:
+  image: postgres:9.4
+vote:
+  image: voting-app
+  ports:
+    - 5000:80
+  links:
+    - redis
+result:
+  image: result-app
+  ports:
+    - 5001:80
+  links:
+    - db
+worker:
+  image: worker
+  links:
+    - redis
+    - db 
+```
+
+-- 개선 후
+
+```yaml
+version: "3"
 services:
   redis:
     image: redis
@@ -163,4 +220,19 @@ networks:
   back-end:
 ```
 
+![img_1.png](img_1.png)
 
+## Docker Registry
+
+### Deploy Private Registry
+
+```bash
+docker run -d -p 5000:5000 --name registry registry:2
+
+docker image tag my-image localhost:5000/my-image
+
+docker push localhost:5000/my-image
+
+# push 확인
+curl -X GET localhost:5000/v2/_catalog
+```
