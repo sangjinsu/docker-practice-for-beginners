@@ -236,3 +236,48 @@ docker push localhost:5000/my-image
 # push 확인
 curl -X GET localhost:5000/v2/_catalog
 ```
+
+## Docker Engine
+
+### Docker Engine 구조
+
+- Docker CLI
+- REST API
+- Docker Daemon
+
+### Containerization
+
+- 프로세스 간 통신(inter process), mount, unix timesharing 시스템이 독립된 Namespace에 생성되고 따라서 컨테이너가 각각 분리됨
+    - Namespace
+        - PID
+          ```bash
+            docker run -d -it --rm -p 8888:8080 tomcat:9.0
+            # 내부 실행 중인 pid 확인
+            docker exec [container] ps -eaf
+          
+          ```
+- 컨테이너는 기본 호스트의 모든 리소스 활용 가능
+- cgroups 를 사용하여 각 컨테이너에 할당된 하드웨어 리소스 양을 제한합니다
+    ```bash
+    docker run --cpu=.5 ubuntu
+    docker run --memory=100m ubuntu
+    ```
+
+## Docker storage
+
+### File System
+
+- /var/lib/docker 폴더 생성 - 컨테이너 관련 정보 저장
+
+### Layered architecture
+
+![img_2.png](img_2.png)
+
+- docker build - read only
+- docker run - read write
+
+### volumes
+
+- 데이터 보존
+- -v 옵션을 사용하여 저장할 폴더를 지정하여 사용
+- 
