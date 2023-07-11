@@ -304,3 +304,23 @@ docker run --name webapp --network wp-mysql-network -p 38080:8080 -e DB_Host=mys
 ```
 
 ![img_3.png](img_3.png)
+
+## docker Orchestrate
+
+- 컨테이너 상태와 성능 모니터링
+```bash
+docker service create --replica=100 nodejs
+```
+
+### docker swarm 
+
+- 여러 docker machine 을 단일 클러스터로 결합할 수 있다
+- 서비스나 애플리케이션 인스턴스를 여러 호스트로 배포한다 
+- swam manager 라고 불리는 마스터를 지정하고  worker 를 지정한다 
+
+
+```yaml
+
+```
+
+![img_4.png](img_4.png)
