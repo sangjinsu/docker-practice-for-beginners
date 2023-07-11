@@ -280,4 +280,27 @@ curl -X GET localhost:5000/v2/_catalog
 
 - 데이터 보존
 - -v 옵션을 사용하여 저장할 폴더를 지정하여 사용
-- 
+
+## Docker Networks
+
+- Default networks
+  - docker run ubuntu 
+  - docker run ubuntu --network=none
+  - docker run ubuntu --network=host
+
+- User-defined networks
+    - docker network create 
+
+- Inspect Network
+  - docker inspect [network]
+  
+- Embedded DNS
+  - we can use container name like address
+
+```bash
+docker network create --driver bridge --subnet 182.18.0.1/24 --gateway 182.18.0.1 wp-mysql-network
+docker run --name mysql-db --network wp-mysql-network -e MYSQL_ROOT_PASSWORD=db_pass123 mysql:5.6
+docker run --name webapp --network wp-mysql-network -p 38080:8080 -e DB_Host=mysql-db -e DB_Password=db_pass123 kodekloud/simple-webapp-mysql
+```
+
+![img_3.png](img_3.png)
